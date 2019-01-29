@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- Vue -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+
+  <!-- BS4 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
+  <!-- custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="app" class="container my-3">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">待辦事項</span>
+      </div>
+      <!-- 新todo 輸入框 -->
+      <input type="text" class="form-control" placeholder="準備要做的任務" v-model="newTodo" @keyup.enter="addTodo">
+      <div class="input-group-append">
+        <!-- 新增按鈕 -->
+        <button class="btn btn-primary" type="button" @click="addTodo">新增</button>
+      </div>
+    </div>
+    <div class="card text-center">
+      <!-- tab標籤 -->
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item" :class="{'completed:visibility==='all''}">
+            <a class="nav-link" href="#">全部</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="#">進行中</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">已完成</a>
+          </li>
+        </ul>
+      </div>
+      <!-- todo清單 -->
+      <ul class="list-group list-group-flush text-left">
+        <li class="list-group-item" v-for="(item,index) in todos">
+          <div class="d-flex">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" v-model="item.completed" :id="item.id">
+              <label class="form-check-label" :class="{'completed':item.completed}" :for="item.id">
+                {{item.name}}
+              </label>
+            </div>
+            <button type="button" class="close ml-auto" aria-label="Close" @click="removeTodo(index)">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </li>
+
+        <li class="list-group-item">
+          <input type="text" class="form-control">
+        </li>
+      </ul>
+      <div class="card-footer d-flex justify-content-between">
+        <span>還有 3 筆任務未完成</span>
+        <a href="#">清除所有任務</a>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+
+</html>
